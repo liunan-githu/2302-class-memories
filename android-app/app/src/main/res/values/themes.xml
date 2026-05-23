@@ -1,9 +1,0 @@
-<resources>
-    <style name="Theme.Class2302" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#FF6B6B</item>
-        <item name="colorPrimaryDark">#EE5A5A</item>
-        <item name="colorAccent">#4ECDC4</item>
-        <item name="android:statusBarColor">#FF6B6B</item>
-        <item name="android:navigationBarColor">#FFFFFF</item>
-    </style>
-</resources>
