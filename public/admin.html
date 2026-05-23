@@ -1,0 +1,827 @@
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>2302班回忆录 - 管理后台</title>
+    
+    <!-- Google Fonts: Fredoka + Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/photo-audit-enhanced.css">
+    
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <nav class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <div class="admin-logo">
+                    <iconify-icon icon="lucide:graduation-cap" width="32" height="32" aria-hidden="true"></iconify-icon>
+                    <span>班级回忆录</span>
+                </div>
+                <button class="view-frontend-btn" onclick="window.location.href='/'" aria-label="查看前台">
+                    <iconify-icon icon="tabler:arrow-left" width="18" height="18" aria-hidden="true"></iconify-icon>
+                    查看前台
+                </button>
+            </div>
+            
+            <div class="admin-user-info">
+                <div class="admin-avatar">
+                <iconify-icon icon="tabler:user-cog" width="40" height="40" aria-hidden="true"></iconify-icon>
+            </div>
+            <div class="admin-details">
+                    <p class="admin-name" id="adminName">管理员</p>
+                    <p class="admin-role">超级管理员</p>
+                </div>
+            </div>
+            
+            <div class="admin-menu">
+                <button class="admin-menu-item active" data-tab="manage" data-permission="video_manage">
+                    <iconify-icon icon="lucide:video" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    视频管理
+                    <span class="menu-badge" id="pendingCount">0</span>
+                </button>
+                <button class="admin-menu-item" data-tab="photos" data-permission="photo_manage">
+                    <iconify-icon icon="lucide:images" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    图片管理
+                    <span class="menu-badge" id="pendingPhotoCount">0</span>
+                </button>
+                <button class="admin-menu-item" data-tab="users" data-permission="user_management">
+                    <iconify-icon icon="tabler:users-group" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    用户管理
+                </button>
+                <button class="admin-menu-item" data-tab="classmates" data-permission="classmates_manage">
+                    <iconify-icon icon="tabler:user-star" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    同学录管理
+                </button>
+                <button class="admin-menu-item" data-tab="about" data-permission="about_manage">
+                    <iconify-icon icon="lucide:code-xml" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    关于页面
+                </button>
+                <button class="admin-menu-item" data-tab="comments" data-permission="comment_manage">
+                    <iconify-icon icon="tabler:message-2" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    评论管理
+                </button>
+                <button class="admin-menu-item" data-tab="statistics" data-permission="statistics_view">
+                    <iconify-icon icon="lucide:chart-line" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    数据统计
+                </button>
+                <button class="admin-menu-item" data-tab="permissions" data-permission="permission_manage" style="display: none;">
+                    <iconify-icon icon="lucide:shield-cog" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    权限管理
+                </button>
+                <button class="admin-menu-item" data-tab="audit" data-permission="audit_log_view" style="display: none;">
+                    <iconify-icon icon="tabler:clipboard-text-clock" width="20" height="20" aria-hidden="true"></iconify-icon>
+                    审计日志
+                </button>
+            </div>
+            
+            <div class="admin-sidebar-footer">
+                <button class="admin-logout-btn" onclick="handleAdminLogout()" aria-label="退出登录">
+                    <iconify-icon icon="lucide:log-out" width="18" height="18" aria-hidden="true"></iconify-icon>
+                    退出登录
+                </button>
+            </div>
+        </nav>
+        
+        <div class="admin-main">
+            <div class="admin-header">
+                <h1 class="admin-page-title" id="pageTitle">视频审核</h1>
+                <div class="admin-actions">
+                    <div class="admin-stats-cards">
+                        <div class="admin-stat-card">
+                            <div class="stat-icon pending">
+                                <iconify-icon icon="lucide:hourglass" width="24" height="24"></iconify-icon>
+                            </div>
+                            <div class="stat-info">
+                                <p class="stat-number" id="statPending">0</p>
+                                <p class="stat-label">待审核</p>
+                            </div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="stat-icon approved">
+                                <iconify-icon icon="tabler:circle-check" width="24" height="24"></iconify-icon>
+                            </div>
+                            <div class="stat-info">
+                                <p class="stat-number" id="statApproved">0</p>
+                                <p class="stat-label">已通过</p>
+                            </div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="stat-icon rejected">
+                                <iconify-icon icon="tabler:circle-x" width="24" height="24"></iconify-icon>
+                            </div>
+                            <div class="stat-info">
+                                <p class="stat-number" id="statRejected">0</p>
+                                <p class="stat-label">已拒绝</p>
+                            </div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="stat-icon users">
+                                <iconify-icon icon="lucide:user" width="24" height="24"></iconify-icon>
+                            </div>
+                            <div class="stat-info">
+                                <p class="stat-number" id="statUsers">0</p>
+                                <p class="stat-label">用户数</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-content">
+                <div id="manageTab" class="admin-tab-content active">
+                    <div class="admin-videos-container">
+                        <!-- 页面标题 -->
+                        <div class="photo-audit-header">
+                            <div class="photo-audit-title-section">
+                                <h2 class="photo-audit-title">
+                                    <iconify-icon icon="lucide:video" width="28" height="28"></iconify-icon>
+                                    视频管理
+                                </h2>
+                                <p class="photo-audit-subtitle">管理所有视频内容，包括审核、编辑和删除操作</p>
+                            </div>
+                        </div>
+
+                        <!-- 转码状态栏 -->
+                        <div class="transcode-status-bar hidden" id="transcodeStatusBar">
+                            <div class="transcode-status-icon">
+                                <iconify-icon icon="lucide:loader-2" width="18" height="18" class="spin-icon"></iconify-icon>
+                            </div>
+                            <div class="transcode-status-text" id="transcodeStatusText">正在转码...</div>
+                            <div class="transcode-status-items" id="transcodeStatusItems"></div>
+                        </div>
+                        
+                        <!-- 工具栏 -->
+                        <div class="photo-audit-toolbar">
+                            <div class="photo-filter-tabs">
+                                <button class="photo-filter-tab active" data-tab="pending" onclick="switchVideoTab('pending')">
+                                    <iconify-icon icon="lucide:hourglass" width="16" height="16"></iconify-icon>
+                                    待审核
+                                    <span class="tab-badge" id="tabPendingCount">0</span>
+                                </button>
+                                <button class="photo-filter-tab" data-tab="approved" onclick="switchVideoTab('approved')">
+                                    <iconify-icon icon="tabler:circle-check" width="16" height="16"></iconify-icon>
+                                    已通过
+                                </button>
+                                <button class="photo-filter-tab" data-tab="rejected" onclick="switchVideoTab('rejected')">
+                                    <iconify-icon icon="lucide:x-circle" width="16" height="16"></iconify-icon>
+                                    已拒绝
+                                </button>
+                                <button class="photo-filter-tab" data-tab="all" onclick="switchVideoTab('all')">
+                                    <iconify-icon icon="tabler:folder-video" width="16" height="16"></iconify-icon>
+                                    全部视频
+                                </button>
+                            </div>
+                            <div class="photo-toolbar-right">
+                                <div class="photo-search-box">
+                                    <iconify-icon icon="lucide:search" width="18" height="18"></iconify-icon>
+                                    <input type="text" id="videoSearchInput" placeholder="搜索视频标题..." oninput="searchVideos(this.value)">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 视频列表 -->
+                        <div id="videoList" class="photo-audit-grid">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="photosTab" class="admin-tab-content">
+                    <div class="admin-photos-container">
+                        <!-- 页面标题和帮助 -->
+                        <div class="photo-audit-header">
+                            <div class="photo-audit-title-section">
+                                <h2 class="photo-audit-title">
+                                    <iconify-icon icon="lucide:images" width="28" height="28"></iconify-icon>
+                                    图片管理
+                                </h2>
+                                <p class="photo-audit-subtitle">管理所有图片内容，包括审核、浏览和删除操作</p>
+                            </div>
+                            <div class="photo-audit-actions">
+                                <button class="btn-help" onclick="showPhotoAuditHelp()">
+                                    <iconify-icon icon="lucide:circle-help" width="18" height="18"></iconify-icon>
+                                    使用帮助
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 工具栏 -->
+                        <div class="photo-audit-toolbar">
+                            <div class="photo-filter-tabs">
+                                <button class="photo-filter-tab active" data-tab="pending" onclick="switchPhotoTab('pending', event)">
+                                    <iconify-icon icon="lucide:hourglass" width="16" height="16"></iconify-icon>
+                                    待审核
+                                    <span class="tab-badge" id="tabPendingCount">0</span>
+                                </button>
+                                <button class="photo-filter-tab" data-tab="all" onclick="switchPhotoTab('all', event)">
+                                    <iconify-icon icon="tabler:folder-image" width="16" height="16"></iconify-icon>
+                                    全部图片
+                                </button>
+                            </div>
+                            <div class="photo-toolbar-right">
+                                <div class="photo-search-box">
+                                    <iconify-icon icon="lucide:search" width="18" height="18"></iconify-icon>
+                                    <input type="text" id="photoSearchInput" placeholder="搜索相册标题..." oninput="searchPhotos(this.value)">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 图片列表 -->
+                        <div id="photoList" class="photo-audit-grid">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="usersTab" class="admin-tab-content">
+                    <div class="admin-user-list" id="userList">
+                    </div>
+                </div>
+                
+                <div id="classmatesTab" class="admin-tab-content">
+                    <div class="admin-classmates-container">
+                        <div class="admin-page-header">
+                            <h3>同学录管理</h3>
+                            <button class="admin-add-btn" onclick="openAddClassmateModal()">
+                                <iconify-icon icon="lucide:plus" width="18" height="18"></iconify-icon>
+                                添加同学
+                            </button>
+                        </div>
+                        <div class="admin-classmate-list" id="classmateList">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="aboutTab" class="admin-tab-content">
+                    <div class="admin-about-container">
+                        <div class="admin-page-header">
+                            <h3>关于页面管理</h3>
+                            <button class="admin-add-btn" onclick="openEditAboutModal()">
+                                <iconify-icon icon="lucide:pencil" width="18" height="18"></iconify-icon>
+                                编辑内容
+                            </button>
+                        </div>
+                        <div class="admin-about-preview" id="aboutPreview">
+                            <div class="preview-loading">
+                                <iconify-icon icon="tabler:loader-2" width="48" height="48"></iconify-icon>
+                                <p>加载中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="commentsTab" class="admin-tab-content">
+                    <div class="admin-comment-list" id="commentList">
+                    </div>
+                </div>
+                
+                <div id="statisticsTab" class="admin-tab-content">
+                    <div class="admin-statistics-grid">
+                        <div class="stat-chart-card">
+                            <h3>视频上传趋势</h3>
+                            <div class="chart-placeholder">
+                                <iconify-icon icon="lucide:chart-bar" width="64" height="64"></iconify-icon>
+                                <p>图表功能开发中</p>
+                            </div>
+                        </div>
+                        <div class="stat-chart-card">
+                            <h3>用户活跃度</h3>
+                            <div class="chart-placeholder">
+                                <iconify-icon icon="lucide:chart-line" width="64" height="64"></iconify-icon>
+                                <p>图表功能开发中</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="permissionsTab" class="admin-tab-content">
+                    <div class="admin-permissions-container">
+                        <div class="admin-page-header">
+                            <h3>权限管理</h3>
+                            <div class="admin-filter-bar">
+                                <input type="text" id="permissionUserSearch" placeholder="搜索用户..." class="admin-search-input">
+                                <select id="permissionRoleFilter" class="admin-filter-select">
+                                    <option value="">所有角色</option>
+                                    <option value="user">普通用户</option>
+                                    <option value="admin">管理员</option>
+                                    <option value="superadmin">超级管理员</option>
+                                </select>
+                                <button class="admin-refresh-btn" onclick="loadPermissionUsers()">
+                                    <iconify-icon icon="tabler:refresh" width="18" height="18"></iconify-icon>
+                                    刷新
+                                </button>
+                            </div>
+                        </div>
+                        <div class="admin-permission-users-list" id="permissionUsersList">
+                            <div class="loading-state">
+                                <iconify-icon icon="tabler:loader-2" width="48" height="48" class="spin"></iconify-icon>
+                                <p>加载中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="auditTab" class="admin-tab-content">
+                    <div class="admin-audit-container">
+                        <div class="admin-page-header">
+                            <h3>审计日志</h3>
+                            <div class="admin-filter-bar">
+                                <select id="auditActionFilter" class="admin-filter-select">
+                                    <option value="">所有操作</option>
+                                    <option value="USER_PROMOTE">提升用户</option>
+                                    <option value="USER_DEMOTE">降级用户</option>
+                                    <option value="PERMISSION_UPDATE">权限更新</option>
+                                    <option value="USER_BAN">封禁用户</option>
+                                    <option value="USER_UNBAN">解封用户</option>
+                                </select>
+                                <button class="admin-refresh-btn" onclick="loadAuditLogs()">
+                                    <iconify-icon icon="tabler:refresh" width="18" height="18"></iconify-icon>
+                                    刷新
+                                </button>
+                            </div>
+                        </div>
+                        <div class="admin-audit-list" id="auditList">
+                            <div class="loading-state">
+                                <iconify-icon icon="tabler:loader-2" width="48" height="48" class="spin"></iconify-icon>
+                                <p>加载中...</p>
+                            </div>
+                        </div>
+                        <div class="admin-pagination" id="auditPagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    
+    <!-- 拒绝原因弹窗 -->
+    <div class="admin-modal" id="rejectModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3>拒绝视频</h3>
+                <button class="admin-modal-close" onclick="closeRejectModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body">
+                <label class="input-label" for="rejectReason">拒绝原因</label>
+                <textarea id="rejectReason" placeholder="请输入拒绝原因..." rows="4"></textarea>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-cancel" onclick="closeRejectModal()">取消</button>
+                <button class="btn-confirm" onclick="confirmReject()">确认拒绝</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 封禁用户弹窗 -->
+    <div class="admin-modal" id="banModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3>封禁用户</h3>
+                <button class="admin-modal-close" onclick="closeBanModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body">
+                <label class="input-label" for="banReason">封禁原因</label>
+                <textarea id="banReason" placeholder="请输入封禁原因..." rows="4"></textarea>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-cancel" onclick="closeBanModal()">取消</button>
+                <button class="btn-confirm" onclick="confirmBan()">确认封禁</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 禁止上传弹窗 -->
+    <div class="admin-modal" id="disableUploadModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3>禁止上传</h3>
+                <button class="admin-modal-close" onclick="closeDisableUploadModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body">
+                <label class="input-label" for="disableUploadReason">禁止原因</label>
+                <textarea id="disableUploadReason" placeholder="请输入禁止原因..." rows="4"></textarea>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-cancel" onclick="closeDisableUploadModal()">取消</button>
+                <button class="btn-confirm" onclick="confirmDisableUpload()">确认禁止</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加/编辑同学录弹窗 -->
+    <div class="admin-modal" id="classmateModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3 id="classmateModalTitle">添加同学</h3>
+                <button class="admin-modal-close" onclick="closeClassmateModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body">
+                <div class="input-group">
+                    <label class="input-label">姓名 <span class="required">*</span></label>
+                    <input type="text" id="classmateName" placeholder="请输入姓名" required />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">毕业年份</label>
+                    <input type="text" id="classmateGraduationYear" placeholder="例如：2024" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">性格特点</label>
+                    <input type="text" id="classmatePersonality" placeholder="例如：开朗活泼" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">联系方式</label>
+                    <input type="text" id="classmateContact" placeholder="例如：微信/QQ/电话/邮箱" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">照片</label>
+                    <div class="photo-upload-area">
+                        <div class="photo-preview" id="classmatePhotoPreview">
+                            <iconify-icon icon="lucide:user" width="48" height="48"></iconify-icon>
+                            <p>点击上传照片</p>
+                        </div>
+                        <input type="file" id="classmatePhotoFile" accept="image/*" style="display: none;" />
+                        <input type="hidden" id="classmatePhoto" />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">个人简介</label>
+                    <textarea id="classmateDescription" placeholder="描述一下这位同学..." rows="4"></textarea>
+                </div>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-cancel" onclick="closeClassmateModal()">取消</button>
+                <button class="btn-confirm" onclick="saveClassmate()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 删除确认弹窗 -->
+    <div class="admin-modal" id="deleteClassmateModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3>删除同学</h3>
+                <button class="admin-modal-close" onclick="closeDeleteClassmateModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body">
+                <p>确定要删除这位同学的信息吗？此操作无法撤销。</p>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-cancel" onclick="closeDeleteClassmateModal()">取消</button>
+                <button class="btn-confirm danger" onclick="confirmDeleteClassmate()">确认删除</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 编辑关于页面弹窗 -->
+    <div class="admin-modal" id="aboutModal">
+        <div class="admin-modal-content about-modal-content">
+            <div class="admin-modal-header">
+                <h3>编辑关于页面</h3>
+                <button class="admin-modal-close" onclick="closeAboutModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body about-modal-body">
+                <div class="about-form-grid">
+                    <!-- 左侧：基本信息 -->
+                    <div class="about-form-column">
+                        <div class="input-group">
+                            <label class="input-label">团队名称</label>
+                            <input type="text" id="aboutCreatorName" placeholder="例如：2302班技术团队" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">团队角色</label>
+                            <input type="text" id="aboutCreatorRole" placeholder="例如：网站开发 & 设计" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">项目介绍</label>
+                            <textarea id="aboutProjectDesc" placeholder="描述一下这个项目..." rows="3"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">项目介绍（第二部分）</label>
+                            <textarea id="aboutProjectDesc2" placeholder="可选的补充描述..." rows="2"></textarea>
+                        </div>
+                    </div>
+                    <!-- 右侧：致谢信息 -->
+                    <div class="about-form-column">
+                        <div class="input-group">
+                            <label class="input-label">致谢信息</label>
+                            <textarea id="aboutThanks" placeholder="例如：感谢每一位为这个项目付出的同学们..." rows="3"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">致谢信息（第二部分）</label>
+                            <textarea id="aboutThanks2" placeholder="例如：愿我们的回忆永远珍贵..." rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-modal-footer about-modal-footer">
+                <button class="btn-cancel" onclick="closeAboutModal()">取消</button>
+                <button class="btn-confirm" onclick="saveAbout()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 权限管理弹窗 -->
+    <div class="admin-modal" id="permissionModal">
+        <div class="admin-modal-content permission-modal-content">
+            <div class="admin-modal-header">
+                <h3>管理用户权限</h3>
+                <button class="admin-modal-close" onclick="closePermissionModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body permission-modal-body">
+                <div class="permission-user-info" id="permissionUserInfo">
+                    <div class="user-info-avatar">
+                        <iconify-icon icon="lucide:user" width="48" height="48"></iconify-icon>
+                    </div>
+                    <div class="user-info-details">
+                        <h4 id="permissionUsername">用户名</h4>
+                        <p id="permissionCurrentRole">当前角色：普通用户</p>
+                    </div>
+                </div>
+                
+                <div class="permission-actions">
+                    <div class="permission-action-group">
+                        <h5>角色管理</h5>
+                        <div class="role-actions">
+                            <button class="role-action-btn promote-btn" id="promoteUserBtn" onclick="promoteUser()">
+                                <iconify-icon icon="lucide:chevron-up" width="20" height="20"></iconify-icon>
+                                提升为管理员
+                            </button>
+                            <button class="role-action-btn demote-btn" id="demoteUserBtn" onclick="demoteUser()">
+                                <iconify-icon icon="lucide:chevron-down" width="20" height="20"></iconify-icon>
+                                降级为普通用户
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="permission-action-group" id="customPermissionsGroup">
+                        <h5>自定义权限</h5>
+                        <div class="permission-templates">
+                            <button class="template-btn" onclick="applyPermissionTemplate('admin')">应用管理员模板</button>
+                            <button class="template-btn" onclick="applyPermissionTemplate('moderator')">应用版主模板</button>
+                            <button class="template-btn" onclick="clearAllPermissions()">清除所有权限</button>
+                        </div>
+                        <div class="permission-categories">
+                            <div class="permission-category">
+                                <h6>用户管理</h6>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="user_management">
+                                    <span>查看用户列表</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="user_promote">
+                                    <span>提升用户为管理员</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="user_demote">
+                                    <span>降级管理员</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="user_ban">
+                                    <span>封禁用户</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="user_unban">
+                                    <span>解封用户</span>
+                                </label>
+                            </div>
+                            <div class="permission-category">
+                                <h6>内容管理</h6>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="video_audit">
+                                    <span>视频审核</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="video_manage">
+                                    <span>视频管理</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="video_delete">
+                                    <span>删除视频</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="photo_manage">
+                                    <span>照片管理</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="comment_manage">
+                                    <span>评论管理</span>
+                                </label>
+                            </div>
+                            <div class="permission-category">
+                                <h6>系统管理</h6>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="classmates_manage">
+                                    <span>同学录管理</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="about_manage">
+                                    <span>关于页面管理</span>
+                                </label>
+                                <label class="permission-checkbox">
+                                    <input type="checkbox" data-permission="statistics_view">
+                                    <span>查看统计数据</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-modal-footer permission-modal-footer">
+                <button class="btn-cancel" onclick="closePermissionModal()">取消</button>
+                <button class="btn-confirm" onclick="saveUserPermissions()">保存权限</button></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 图片详情模态框 -->
+    <div id="photoDetailModal" class="photo-detail-modal">
+        <div class="photo-detail-container">
+            <div class="photo-detail-header">
+                <h3 id="photoDetailTitle" class="photo-detail-title">相册标题</h3>
+                <button class="photo-detail-close" onclick="closePhotoDetail()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="photo-detail-body">
+                <div class="photo-viewer">
+                    <div class="photo-viewer-content">
+                        <img id="currentPhoto" class="photo-viewer-image" src="" alt="">
+                    </div>
+                    <div class="photo-counter">
+                        <span id="currentPhotoIndex">1</span> / <span id="totalPhotos">1</span>
+                    </div>
+                    <button class="photo-nav-btn prev" onclick="prevPhoto()">
+                        <iconify-icon icon="tabler:chevron-left" width="32" height="32"></iconify-icon>
+                    </button>
+                    <button class="photo-nav-btn next" onclick="nextPhoto()">
+                        <iconify-icon icon="tabler:chevron-right" width="32" height="32"></iconify-icon>
+                    </button>
+                    <div id="photoThumbnails" class="photo-thumbnails"></div>
+                </div>
+                <div class="photo-detail-sidebar">
+                    <div class="photo-detail-info">
+                        <h3>相册信息</h3>
+                        <p id="photoDetailDescription">相册描述</p>
+                        <div class="photo-detail-meta">
+                            <div class="photo-detail-meta-item">
+                                <iconify-icon icon="lucide:user" width="18" height="18"></iconify-icon>
+                                <span id="photoDetailAuthor">上传者</span>
+                            </div>
+                            <div class="photo-detail-meta-item">
+                                <iconify-icon icon="lucide:folder" width="18" height="18"></iconify-icon>
+                                <span id="photoDetailCategory">分类</span>
+                            </div>
+                            <div class="photo-detail-meta-item">
+                                <iconify-icon icon="lucide:calendar" width="18" height="18"></iconify-icon>
+                                <span id="photoDetailDate">日期</span>
+                            </div>
+                            <div class="photo-detail-meta-item">
+                                <iconify-icon icon="lucide:images" width="18" height="18"></iconify-icon>
+                                <span id="photoDetailCount">共 X 张</span>
+                            </div>
+                        </div>
+                        <!-- 操作按钮 -->
+                        <div class="photo-detail-actions" id="photoDetailActions">
+                            <button class="btn-approve" id="btnApprovePhoto" onclick="approveCurrentPhotoBatch()">
+                                <iconify-icon icon="lucide:check" width="18" height="18"></iconify-icon>
+                                通过审核
+                            </button>
+                            <button class="btn-reject" id="btnRejectPhoto" onclick="rejectCurrentPhotoBatch()">
+                                <iconify-icon icon="lucide:x" width="18" height="18"></iconify-icon>
+                                拒绝审核
+                            </button>
+                            <button class="btn-delete" onclick="deleteCurrentPhotoBatch()">
+                                <iconify-icon icon="tabler:trash" width="18" height="18"></iconify-icon>
+                                删除相册
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认操作弹窗 -->
+    <div class="admin-modal" id="confirmModal">
+        <div class="admin-modal-content confirm-modal-content">
+            <div class="admin-modal-header">
+                <h3 id="confirmTitle">确认操作</h3>
+                <button class="admin-modal-close" onclick="closeConfirmModal()" aria-label="关闭">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="admin-modal-body">
+                <div class="confirm-icon">
+                    <iconify-icon icon="lucide:alert-triangle-circle" width="64" height="64"></iconify-icon>
+                </div>
+                <p id="confirmMessage" class="confirm-message">确定要执行此操作吗？</p>
+                <p id="confirmWarning" class="confirm-warning">此操作不可撤销！</p>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-cancel" onclick="closeConfirmModal()">取消</button>
+                <button class="btn-confirm btn-danger" id="confirmActionBtn" onclick="executeConfirmedAction()">确认</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 帮助文档模态框 -->
+    <div id="photoAuditHelpModal" class="help-modal">
+        <div class="help-container">
+            <div class="help-header">
+                <h3>
+                    <iconify-icon icon="lucide:circle-help" width="24" height="24"></iconify-icon>
+                    图片审核系统使用指南
+                </h3>
+                <button class="photo-detail-close" onclick="closePhotoAuditHelp()" aria-label="关闭帮助文档">
+                    <iconify-icon icon="lucide:x" width="24" height="24" aria-hidden="true"></iconify-icon>
+                </button>
+            </div>
+            <div class="help-body">
+                <div class="help-section">
+                    <h4>
+                        <iconify-icon icon="lucide:info" width="18" height="18"></iconify-icon>
+                        功能概述
+                    </h4>
+                    <p>图片审核系统用于管理用户上传的图片批次。每个批次可包含多张图片，审核时以批次为单位进行统一处理，提高审核效率。</p>
+                </div>
+                <div class="help-section">
+                    <h4>
+                        <iconify-icon icon="tabler:clipboard-check" width="18" height="18"></iconify-icon>
+                        审核流程
+                    </h4>
+                    <ul>
+                        <li>在"待审核"标签页查看待处理的图片批次</li>
+                        <li>点击卡片查看图片详情，可浏览批次中的所有图片</li>
+                        <li>确认内容无误后点击"通过"按钮批准</li>
+                        <li>如内容不当，点击"拒绝"并填写拒绝原因</li>
+                        <li>已审核的批次可在"全部图片"中查看</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>
+                        <iconify-icon icon="lucide:keyboard" width="18" height="18"></iconify-icon>
+                        快捷操作
+                    </h4>
+                    <ul>
+                        <li>在图片详情中使用左右方向键切换图片</li>
+                        <li>按 ESC 键关闭图片详情</li>
+                        <li>使用搜索框快速查找相册</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>
+                        <iconify-icon icon="lucide:alert-triangle-circle" width="18" height="18"></iconify-icon>
+                        注意事项
+                    </h4>
+                    <ul>
+                        <li>请仔细审核每张图片，确保内容符合社区规范</li>
+                        <li>拒绝时请填写明确的原因，帮助用户理解</li>
+                        <li>删除操作不可恢复，请谨慎操作</li>
+                        <li>批量审核时注意检查所有图片内容</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 确认对话框 -->
+    <div id="confirmDialog" class="confirm-dialog-overlay">
+        <div class="confirm-dialog">
+            <div class="confirm-dialog-icon warning" id="confirmIcon">
+                <iconify-icon icon="lucide:alert-triangle" width="32" height="32"></iconify-icon>
+            </div>
+            <h4 id="confirmTitle">确认操作</h4>
+            <p id="confirmMessage">您确定要执行此操作吗？</p>
+            <div class="confirm-dialog-actions">
+                <button class="btn-cancel" onclick="closeConfirmDialog()">取消</button>
+                <button class="btn-confirm" id="confirmBtn" onclick="executeConfirmAction()">确认</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast" id="adminToast"></div>
+    
+    <script src="admin.js?v=11"></script>
+</body>
+</html>

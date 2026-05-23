@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm Amber primary palette (from style.css canonical) */
+  --color-primary-50: #FFFBF0;
+  --color-primary-100: #FEF7E8;
+  --color-primary-200: #FDE68A;
+  --color-primary-300: #FCD34D;
+  --color-primary-400: #FBBF24;
+  --color-primary-500: #F59E0B;
+  --color-primary-600: #D97706;
+  --color-primary-700: #B45309;
+  --color-primary-800: #92400E;
+  --color-primary-900: #78350F;
+
+  /* Rose secondary */
+  --color-rose-400: #FB7185;
+  --color-rose-500: #F43F5E;
+  --color-rose-600: #E11D48;
+  --color-rose-700: #BE123C;
+
+  /* Teal accent */
+  --color-teal-400: #2DD4BF;
+  --color-teal-500: #14B8A6;
+  --color-teal-600: #0D9488;
+  --color-teal-700: #0F766E;
+
+  /* Semantic colors */
+  --color-success-400: #34D399;
+  --color-success-500: #10B981;
+  --color-success-600: #059669;
+  --color-warning-400: #FBBF24;
+  --color-warning-500: #F59E0B;
+  --color-warning-600: #D97706;
+  --color-danger-400: #F87171;
+  --color-danger-500: #EF4444;
+  --color-danger-600: #DC2626;
+
+  /* Surface colors (light theme) */
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FFFBF0;
+  --color-surface-alt: #FEF7E8;
+  --color-surface-elevated: #FFFFFF;
+
+  /* Dark theme surfaces — warm stone palette */
+  --color-dark-50: #fafaf9;
+  --color-dark-100: #f5f5f4;
+  --color-dark-200: #e7e5e4;
+  --color-dark-300: #d6d3d1;
+  --color-dark-400: #a8a29e;
+  --color-dark-500: #78716c;
+  --color-dark-600: #57534e;
+  --color-dark-700: #44403c;
+  --color-dark-800: #292524;
+  --color-dark-900: #1c1917;
+  --color-dark-950: #0c0a09;
+
+  /* Fonts */
+  --font-heading: 'Fredoka', 'Inter', system-ui, sans-serif;
+  --font-body: 'Nunito', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Border radius */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 6px -1px rgba(217, 119, 6, 0.1);
+  --shadow-card-hover: 0 10px 25px -5px rgba(217, 119, 6, 0.12);
+  --shadow-glow: 0 0 30px rgba(217, 119, 6, 0.15);
+  --shadow-glass: 0 0 30px rgba(255, 255, 255, 0.1);
+
+  /* Animations */
+  --animate-fade-in-up: fade-in-up 0.5s ease forwards;
+  --animate-page-enter: page-enter 0.3s ease-out forwards;
+  --animate-slide-up: slide-up 0.3s ease-out;
+  --animate-scale-in: scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-float: float 3s ease-in-out infinite;
+
+  /* Spring easing */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}

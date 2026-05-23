@@ -1,0 +1,23 @@
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle 400px at var(--sx, 50%) var(--sy, 50%), var(--sc, rgba(255,255,255,0.15)), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.spotlight-card:hover .spotlight-glow {
+  opacity: 1;
+}
+
+.spotlight-content {
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,507 @@
+/* ============================================
+   2302班回忆录 - UI增强样式
+   直接增强现有元素，确保立即可见效果
+   ============================================ */
+
+/* 强制应用Inter字体 */
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* ============================================
+   1. 按钮增强效果
+   ============================================ */
+
+/* 所有按钮添加悬停效果 */
+.submit-btn,
+.action-btn,
+.edit-btn,
+.delete-btn,
+.btn,
+button[class*="btn"],
+.nav-btn {
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* 按钮悬停上浮效果 */
+.submit-btn:hover,
+.action-btn:hover,
+.edit-btn:hover,
+.btn:hover,
+button[class*="btn"]:hover,
+.nav-btn:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* 按钮点击效果 */
+.submit-btn:active,
+.action-btn:active,
+.edit-btn:active,
+.btn:active,
+button[class*="btn"]:active,
+.nav-btn:active {
+    transform: translateY(-1px) scale(0.98) !important;
+}
+
+/* 光泽滑过效果 */
+.submit-btn::after,
+.action-btn::after,
+.edit-btn::after,
+.btn::after,
+button[class*="btn"]::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent) !important;
+    transition: left 0.5s ease !important;
+}
+
+.submit-btn:hover::after,
+.action-btn:hover::after,
+.edit-btn:hover::after,
+.btn:hover::after,
+button[class*="btn"]:hover::after {
+    left: 100% !important;
+}
+
+/* ============================================
+   2. 卡片增强效果
+   ============================================ */
+
+/* 视频卡片悬停效果 */
+.video-card,
+.admin-video-card,
+.photo-item,
+.classmate-card {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.video-card:hover,
+.admin-video-card:hover,
+.photo-item:hover,
+.classmate-card:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 卡片图片缩放效果 */
+.video-thumbnail,
+.photo-item img,
+.card-image {
+    transition: transform 0.5s ease !important;
+    overflow: hidden !important;
+}
+
+.video-card:hover .video-thumbnail,
+.photo-item:hover img,
+.card-image:hover {
+    transform: scale(1.1) !important;
+}
+
+/* ============================================
+   3. 输入框增强效果
+   ============================================ */
+
+/* 输入框焦点发光 */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+textarea,
+select,
+.form-input {
+    transition: all 0.3s ease !important;
+    border: 2px solid transparent !important;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus,
+.form-input:focus {
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), 
+                0 0 20px rgba(99, 102, 241, 0.2) !important;
+    outline: none !important;
+}
+
+/* Focus-visible 替代方案 */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid #6366f1 !important;
+    outline-offset: 2px !important;
+}
+
+/* ============================================
+   4. 导航增强效果
+   ============================================ */
+
+/* 导航链接下划线动画 */
+.nav-link,
+.navbar a,
+.nav-item {
+    position: relative !important;
+    transition: color 0.3s ease !important;
+}
+
+.nav-link::after,
+.navbar a::after,
+.nav-item::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 0 !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, #6366f1, #a855f7) !important;
+    transition: width 0.3s ease !important;
+}
+
+.nav-link:hover::after,
+.navbar a:hover::after,
+.nav-item:hover::after,
+.nav-link.active::after,
+.navbar a.active::after {
+    width: 100% !important;
+}
+
+/* ============================================
+   5. Toast通知增强
+   ============================================ */
+
+/* Toast滑入动画 */
+.toast {
+    animation: toastSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   6. 模态框增强
+   ============================================ */
+
+/* 模态框缩放进入 */
+.modal,
+.admin-modal,
+[class*="modal"] {
+    animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes modalScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ============================================
+   7. 加载动画
+   ============================================ */
+
+/* 旋转加载器 */
+.loading,
+.spinner,
+[class*="loading"] {
+    animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   8. 列表项依次进入动画
+   ============================================ */
+
+/* 视频列表、用户列表等 */
+.video-list > *:nth-child(1),
+.user-list > *:nth-child(1),
+.admin-list > *:nth-child(1) { animation: fadeInUp 0.5s ease 0.05s both !important; }
+.video-list > *:nth-child(2),
+.user-list > *:nth-child(2),
+.admin-list > *:nth-child(2) { animation: fadeInUp 0.5s ease 0.1s both !important; }
+.video-list > *:nth-child(3),
+.user-list > *:nth-child(3),
+.admin-list > *:nth-child(3) { animation: fadeInUp 0.5s ease 0.15s both !important; }
+.video-list > *:nth-child(4),
+.user-list > *:nth-child(4),
+.admin-list > *:nth-child(4) { animation: fadeInUp 0.5s ease 0.2s both !important; }
+.video-list > *:nth-child(5),
+.user-list > *:nth-child(5),
+.admin-list > *:nth-child(5) { animation: fadeInUp 0.5s ease 0.25s both !important; }
+.video-list > *:nth-child(6),
+.user-list > *:nth-child(6),
+.admin-list > *:nth-child(6) { animation: fadeInUp 0.5s ease 0.3s both !important; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   9. 徽章脉冲效果
+   ============================================ */
+
+/* 未读消息徽章 */
+.badge,
+.menu-badge,
+[class*="badge"] {
+    animation: pulse 2s infinite !important;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* ============================================
+   10. 错误抖动效果
+   ============================================ */
+
+/* 表单错误状态 */
+.error,
+.input-error,
+[class*="error"] {
+    animation: shake 0.5s ease !important;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+
+/* ============================================
+   11. 成功勾选动画
+   ============================================ */
+
+/* 成功状态 */
+.success-check,
+.check-success {
+    animation: checkScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes checkScale {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* ============================================
+   12. 英雄区域背景动画
+   ============================================ */
+
+/* 背景浮动效果 */
+.hero-section::before,
+.hero::before,
+.banner::before {
+    animation: float 8s ease-in-out infinite !important;
+}
+
+.hero-section::after,
+.hero::after,
+.banner::after {
+    animation: float 10s ease-in-out infinite reverse !important;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-10px, 10px); }
+    50% { transform: translate(10px, -10px); }
+    75% { transform: translate(-5px, -5px); }
+}
+
+/* ============================================
+   13. 滚动条美化
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6366f1, #a855f7);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4f46e5, #9333ea);
+}
+
+/* ============================================
+   14. 选中文字样式
+   ============================================ */
+
+::selection {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white;
+}
+
+/* ============================================
+   15. 图片悬停效果
+   ============================================ */
+
+img,
+.image,
+[class*="image"] {
+    transition: transform 0.5s ease, filter 0.3s ease !important;
+}
+
+img:hover,
+.image:hover,
+[class*="image"]:hover {
+    filter: brightness(1.05) !important;
+}
+
+/* ============================================
+   16. 链接悬停效果
+   ============================================ */
+
+a,
+.link,
+[class*="link"] {
+    transition: color 0.3s ease !important;
+}
+
+/* ============================================
+   17. 标签页切换动画
+   ============================================ */
+
+.tab-content,
+[class*="tab-content"] {
+    animation: fadeIn 0.3s ease !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ============================================
+   18. 统计数字动画
+   ============================================ */
+
+.stat-number,
+[class*="stat"] [class*="number"] {
+    animation: countUp 1s ease-out !important;
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   19. 侧边栏菜单动画
+   ============================================ */
+
+.admin-menu-item,
+.sidebar-item,
+.menu-item {
+    transition: all 0.3s ease !important;
+    position: relative !important;
+}
+
+.admin-menu-item:hover,
+.sidebar-item:hover,
+.menu-item:hover {
+    padding-left: 1.5rem !important;
+}
+
+.admin-menu-item::before,
+.sidebar-item::before,
+.menu-item::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 3px !important;
+    height: 0 !important;
+    background: linear-gradient(180deg, #6366f1, #a855f7) !important;
+    transition: height 0.3s ease !important;
+}
+
+.admin-menu-item:hover::before,
+.sidebar-item:hover::before,
+.menu-item:hover::before,
+.admin-menu-item.active::before,
+.sidebar-item.active::before,
+.menu-item.active::before {
+    height: 100% !important;
+}
+
+/* ============================================
+   20. 响应式优化
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* 移动端减少动画幅度 */
+    .video-card:hover,
+    .admin-video-card:hover,
+    .photo-item:hover,
+    .classmate-card:hover {
+        transform: translateY(-4px) scale(1.01) !important;
+    }
+    
+    .submit-btn:hover,
+    .action-btn:hover,
+    .edit-btn:hover,
+    .btn:hover {
+        transform: translateY(-2px) !important;
+    }
+}
+
+/* ============================================
+   21. 减少动画偏好支持
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

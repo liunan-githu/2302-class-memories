@@ -1,0 +1,251 @@
+/* 焦点可见样式全局 */
+:focus-visible {
+  outline: 2px solid var(--color-primary, #6366f1);
+  outline-offset: 2px;
+}
+
+/* 组件样式补充 — 仅包含 style.css 未涵盖的组件 */
+/* 按钮水波纹效果 */
+.btn::before, .submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before, .submit-btn:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* 照片上传预览 */
+.photo-upload-area { position: relative; }
+
+.photo-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px dashed var(--color-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--color-bg-alt);
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.photo-preview:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.photo-preview p {
+  margin: 8px 0 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+/* 密码设置卡片 */
+.password-settings-wrapper { padding: 24px; display: flex; justify-content: center; align-items: flex-start; min-height: calc(100vh - 120px); }
+
+.password-settings-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+}
+
+.password-card-header {
+  background: var(--gradient-primary);
+  padding: 32px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.password-card-body { padding: 32px; }
+
+.password-form-grid { display: grid; gap: 28px; }
+
+.password-field { display: flex; flex-direction: column; gap: 10px; }
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding: 14px 50px 14px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+  font-size: 1rem;
+  transition: all var(--transition-base);
+}
+
+.password-input-wrapper input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-bg);
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all var(--transition-base);
+}
+
+.password-toggle-btn:hover { background: var(--color-bg-alt); color: var(--color-text); }
+
+/* 密码强度指示器 */
+.password-strength-indicator {
+  background: var(--color-bg-alt);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 4px;
+}
+
+.strength-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.strength-label { font-size: var(--text-xs); color: var(--color-text-secondary); }
+
+.strength-value {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.strength-value.weak { background: var(--color-danger-bg); color: var(--color-danger); }
+.strength-value.medium { background: var(--color-warning-bg); color: var(--color-warning); }
+.strength-value.strong { background: var(--color-success-bg); color: var(--color-success); }
+
+.strength-track {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.strength-fill { height: 100%; width: 0%; border-radius: 3px; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.strength-fill.weak { width: 20%; background: var(--color-danger); }
+.strength-fill.medium { width: 60%; background: var(--color-warning); }
+.strength-fill.strong { width: 100%; background: var(--color-success); }
+
+.strength-requirements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.requirement.valid { color: var(--color-success); }
+
+.password-match-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all var(--transition-base);
+}
+
+.password-match-indicator.valid { background: var(--color-success-bg); color: var(--color-success); }
+.password-match-indicator.invalid { background: var(--color-danger-bg); color: var(--color-danger); }
+
+.password-security-tips {
+  margin-top: 28px;
+  padding: 20px;
+  background: var(--color-primary-bg);
+  border-radius: 12px;
+  border: 1px solid var(--color-border-light);
+}
+
+.tips-header { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+
+.tips-list { margin: 0; padding-left: 20px; list-style: none; }
+
+.tips-list li {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+  position: relative;
+  padding-left: 16px;
+}
+
+.tips-list li::before { content: '•'; position: absolute; left: 0; color: var(--color-primary); }
+
+.password-card-footer { padding: 0 32px 32px; }
+
+.password-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 48px;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 15px rgba(124,58,237,0.3);
+}
+
+.password-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,0.4); }
+.password-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* 状态列表加载动画 */
+.content-list { display: flex; flex-direction: column; gap: 16px; }
+
+/* 管理后台面包屑 */
+.breadcrumb { display: flex; align-items: center; gap: 8px; color: var(--color-text-muted); font-size: var(--text-sm); }
+
+/* 全局图标动画 (原 animations.css 中的内容) */
+iconify-icon { transition: transform 0.3s ease, color 0.3s ease; }
+
+button:hover iconify-icon,
+.hero-btn:hover iconify-icon { transform: scale(1.1); }
+
+.logo iconify-icon { animation: iconPulse 3s ease-in-out infinite; }
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.theme-toggle-btn:hover iconify-icon { transform: rotate(30deg); }

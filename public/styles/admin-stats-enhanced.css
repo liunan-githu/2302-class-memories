@@ -1,0 +1,349 @@
+/* ============================================
+   后台管理系统 - 数据统计区域优化样式
+   优化目标：提升视觉呈现效果，统一设计风格
+   ============================================ */
+
+/* ---------- 统计卡片容器 ---------- */
+.admin-stats-cards {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+    max-width: 800px !important;
+}
+
+@media (max-width: 1200px) {
+    .admin-stats-cards {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-stats-cards {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ---------- 统计卡片基础样式 ---------- */
+.admin-stat-card {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.1) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.admin-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--stat-color, #3b82f6) 0%, transparent 100%);
+    opacity: 0.8;
+}
+
+.admin-stat-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, var(--stat-color, #3b82f6) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(148, 163, 184, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.admin-stat-card:hover::after {
+    opacity: 0.05;
+}
+
+/* ---------- 不同状态的卡片颜色 ---------- */
+.admin-stat-card:nth-child(1) {
+    --stat-color: #f59e0b;
+}
+
+.admin-stat-card:nth-child(2) {
+    --stat-color: #10b981;
+}
+
+.admin-stat-card:nth-child(3) {
+    --stat-color: #ef4444;
+}
+
+.admin-stat-card:nth-child(4) {
+    --stat-color: #3b82f6;
+}
+
+/* ---------- 图标样式 ---------- */
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.stat-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--stat-color) 0%, transparent 100%);
+    opacity: 0.2;
+}
+
+.stat-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 100%);
+}
+
+.stat-icon.pending {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
+}
+
+.stat-icon.pending iconify-icon {
+    color: #fbbf24;
+    filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.4));
+}
+
+.stat-icon.approved {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.05) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+}
+
+.stat-icon.approved iconify-icon {
+    color: #34d399;
+    filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.4));
+}
+
+.stat-icon.rejected {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.05) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+}
+
+.stat-icon.rejected iconify-icon {
+    color: #f87171;
+    filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.4));
+}
+
+.stat-icon.users {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+}
+
+.stat-icon.users iconify-icon {
+    color: #60a5fa;
+    filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.4));
+}
+
+.admin-stat-card:hover .stat-icon {
+    transform: scale(1.1);
+}
+
+/* ---------- 统计信息区域 ---------- */
+.stat-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #f8fafc;
+    line-height: 1;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.02em;
+    transition: all 0.3s ease;
+}
+
+.admin-stat-card:hover .stat-number {
+    color: var(--stat-color);
+    transform: scale(1.05);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* ---------- 趋势指示器（可选） ---------- */
+.stat-trend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.stat-trend.up {
+    color: #34d399;
+}
+
+.stat-trend.down {
+    color: #f87171;
+}
+
+.stat-trend iconify-icon {
+    font-size: 14px;
+}
+
+/* ---------- 动画效果 ---------- */
+@keyframes statCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-stat-card {
+    animation: statCardFadeIn 0.5s ease backwards;
+}
+
+.admin-stat-card:nth-child(1) { animation-delay: 0s; }
+.admin-stat-card:nth-child(2) { animation-delay: 0.1s; }
+.admin-stat-card:nth-child(3) { animation-delay: 0.2s; }
+.admin-stat-card:nth-child(4) { animation-delay: 0.3s; }
+
+/* ---------- 数字变化动画 ---------- */
+@keyframes numberPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.stat-number.updating {
+    animation: numberPulse 0.3s ease;
+    color: var(--stat-color);
+}
+
+/* ---------- 响应式优化 ---------- */
+@media (max-width: 1400px) {
+    .admin-stats-cards {
+        gap: 12px;
+    }
+    
+    .admin-stat-card {
+        padding: 16px;
+    }
+    
+    .stat-icon {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .admin-stats-cards {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-stat-card {
+        padding: 14px;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .stat-icon iconify-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .stat-number {
+        font-size: 1.25rem;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+    }
+}
+
+/* ---------- 暗色模式优化 ---------- */
+@media (prefers-color-scheme: dark) {
+    .admin-stat-card {
+        background: linear-gradient(145deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.9) 100%);
+    }
+}
+
+/* ---------- 加载状态 ---------- */
+.admin-stat-card.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.admin-stat-card.loading .stat-number {
+    background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    color: transparent;
+    border-radius: 4px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ---------- 选中/激活状态 ---------- */
+.admin-stat-card.active {
+    border-color: var(--stat-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2), 
+                0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.admin-stat-card.active::before {
+    opacity: 1;
+    height: 4px;
+}

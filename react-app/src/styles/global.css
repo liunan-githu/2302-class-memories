@@ -1,0 +1,116 @@
+@import './tokens.css';
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, #FEF7E8 0%, #FFF0F5 30%, #FEFCE8 60%, #FFF7ED 100%);
+    background-attachment: fixed;
+    color: #1C1917;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dark body,
+  body.dark {
+    background-color: var(--color-dark-900);
+    color: #F8FAFC;
+  }
+
+  ::selection {
+    background-color: rgba(217, 119, 6, 0.2);
+    color: #1C1917;
+  }
+
+  .dark ::selection {
+    background-color: rgba(245, 158, 11, 0.3);
+    color: #F8FAFC;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #D97706, #F59E0B);
+    border-radius: 3px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #F59E0B, #FB7185);
+  }
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(217, 119, 6, 0.12);
+  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.06);
+
+  .dark & {
+    background: rgba(28, 25, 23, 0.7);
+    border-color: rgba(68, 64, 60, 0.4);
+  }
+}
+
+@utility glass-hover {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.1);
+
+  .dark & {
+    background: rgba(28, 25, 23, 0.85);
+  }
+}
+
+@utility text-gradient {
+  background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #E11D48 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility hover-lift {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
+@utility page-transition {
+  animation: page-enter 0.3s ease-out forwards;
+}
+
+@utility stagger-item {
+  opacity: 0;
+  animation: fade-in-up 0.5s ease forwards;
+}
+
+@utility focus-ring {
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+}
