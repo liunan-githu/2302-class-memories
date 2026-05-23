@@ -20,13 +20,6 @@ db.json
 *.tar.gz
 *.zip
 
-# Android
-android-app/local.properties
-android-app/.gradle/
-android-app/**/build/
-*.apk
-*.aab
-
 # IDE / Tools
 .trae/
 _temp_check/
